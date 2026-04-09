@@ -1,34 +1,48 @@
 export default async function handler(req, res) {
-    // 1. Setup - Use your tag and the secret key from Vercel Environment Variables
+    // 1. CONFIGURATION
+    // Your Player Tag (the %23 represents the # symbol)
     const playerTag = "2UJLYCRP0"; 
+    
+    // This pulls your key from Vercel's Environment Variables
     const apiKey = process.env.BRAWL_KEY;
+
+    // Use the RoyaleAPI proxy - the most stable for Brawl Stars in 2026
     const url = `https://proxy.royaleapi.dev/v1/players/%23${playerTag}`;
 
     try {
         const response = await fetch(url, {
             method: 'GET',
             headers: {
-                'Authorization': `Bearer ${eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImI4ZjA2ODNhLTVmMDgtNDczYi1hMjM1LWViNDNiYmVhMjA2OCIsImlhdCI6MTc3NTcwMTgwNywic3ViIjoiZGV2ZWxvcGVyL2QyMDlkMmYwLTgwNWEtZjQyNi05NTBlLWVkODEyOWJiYzdkOSIsInNjb3BlcyI6WyJicmF3bHN0YXJzIl0sImxpbWl0cyI6W3sidGllciI6ImRldmVsb3Blci9zaWx2ZXIiLCJ0eXBlIjoidGhyb3R0bGluZyJ9LHsiY2lkcnMiOlsiNDUuNzkuMjE4Ljc5Il0sInR5cGUiOiJjbGllbnQifV19.l5U6JZbqyp8U9MdrlK8Enwzj_VosvjlcwswdExCqasu5wEuWe5v0I5PfV9zJFuADT9MK21bA4Gx1BdKWSKlrFA}`,
-                'Accept': 'application/json'
+                // We add 'Bearer ' here so you don't have to put it in Vercel
+                'Authorization': `Bearer ${apiKey}`,
+                'Accept': 'application/json',
+                // User-Agent identifies your request to the proxy
+                'User-Agent': 'Vercel-Brawl-Stats-Project'
             }
         });
 
-        // 2. Error Handling
+        // 2. ERROR HANDLING
         if (!response.ok) {
             const errorData = await response.json();
+            // This sends the specific Supercell error (like Invalid IP) to your screen
             return res.status(response.status).json(errorData);
         }
 
         const data = await response.json();
 
-        // 3. Security - Allow your main website (larpers.xyz) to access this data
+        // 3. CORS SETTINGS (Crucial for larpers.xyz)
         res.setHeader('Access-Control-Allow-Origin', '*'); 
         res.setHeader('Access-Control-Allow-Methods', 'GET');
-        
-        // 4. Success - Send data to the frontend
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+        // 4. SEND DATA
         res.status(200).json(data);
 
     } catch (error) {
-        res.status(500).json({ error: "Failed to connect to Supercell" });
+        console.error("Server Error:", error);
+        res.status(500).json({ 
+            error: "Failed to fetch data from Supercell",
+            details: error.message 
+        });
     }
 }

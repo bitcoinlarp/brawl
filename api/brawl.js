@@ -8,7 +8,7 @@ export default async function handler(req, res) {
         const response = await fetch(url, {
             method: 'GET',
             headers: {
-                'Authorization': `Bearer ${apiKey}`,
+                'Authorization': `Bearer ${eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImI4ZjA2ODNhLTVmMDgtNDczYi1hMjM1LWViNDNiYmVhMjA2OCIsImlhdCI6MTc3NTcwMTgwNywic3ViIjoiZGV2ZWxvcGVyL2QyMDlkMmYwLTgwNWEtZjQyNi05NTBlLWVkODEyOWJiYzdkOSIsInNjb3BlcyI6WyJicmF3bHN0YXJzIl0sImxpbWl0cyI6W3sidGllciI6ImRldmVsb3Blci9zaWx2ZXIiLCJ0eXBlIjoidGhyb3R0bGluZyJ9LHsiY2lkcnMiOlsiNDUuNzkuMjE4Ljc5Il0sInR5cGUiOiJjbGllbnQifV19.l5U6JZbqyp8U9MdrlK8Enwzj_VosvjlcwswdExCqasu5wEuWe5v0I5PfV9zJFuADT9MK21bA4Gx1BdKWSKlrFA}`,
                 'Accept': 'application/json'
             }
         });

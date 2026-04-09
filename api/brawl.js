@@ -6,8 +6,7 @@ export default async function handler(req, res) {
     const apiKey = process.env.BRAWL_KEY;
 
     // We use %23 to represent the # symbol in the URL
-    const url = `https://api.brawlstars.com/v1/players/%23${playerTag}`;
-
+const url = `https://api.bsproxy.xyz/v1/players/%23${playerTag}`;
     try {
         const response = await fetch(url, {
             method: 'GET',

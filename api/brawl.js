@@ -7,8 +7,7 @@ export default async function handler(req, res) {
     const apiKey = process.env.BRAWL_KEY;
 
     // Use the RoyaleAPI proxy - the most stable for Brawl Stars in 2026
-    const url = `https://proxy.royaleapi.dev/v1/players/%23${playerTag}`;
-
+const url = 'https://bsproxy.royaleapi.dev/v1/players/%232UJLYCRP0';
     try {
         const response = await fetch(url, {
             method: 'GET',
